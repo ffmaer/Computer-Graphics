@@ -6,6 +6,7 @@
 
 import java.awt.*;
 
+@SuppressWarnings("serial")
 public abstract class BufferedApplet extends java.applet.Applet implements Runnable
 {
    // YOU MUST DEFINE A METHOD TO RENDER THE APPLET
@@ -15,7 +16,7 @@ public abstract class BufferedApplet extends java.applet.Applet implements Runna
    // A BACKGROUND THREAD CALLS REPAINT EVERY 30 MILLISECONDS,
 
    public void start() { if (t == null) (t = new Thread(this)).start(); }
-   public void run()   { try { while (true) { repaint(); t.sleep(30); } }
+   public void run()   { try { while (true) { repaint(); Thread.sleep(30); } }
                          catch(Exception e){}; }
 
    // WHICH CALLS UPDATE, WHICH CALLS YOUR RENDER METHOD.

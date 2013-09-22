@@ -1,6 +1,6 @@
 import java.awt.*;
 import java.util.Random;
-
+@SuppressWarnings("serial")
 public class Ray extends BufferedApplet
 {
 

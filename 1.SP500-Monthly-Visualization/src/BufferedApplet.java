@@ -4,15 +4,10 @@
 // TO CHANGE IT.  IT'S REALLY JUST USEFUL LOW LEVEL PLUMBING.
 
 import java.awt.*;
-
+@SuppressWarnings("serial")
 public abstract class BufferedApplet extends java.applet.Applet implements
 		Runnable {
 	// YOU MUST DEFINE A METHOD TO RENDER THE APPLET
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2102962940176765977L;
 	public abstract void render(Graphics g);
 
 	// A BACKGROUND THREAD CALLS REPAINT EVERY 30 MILLISECONDS,

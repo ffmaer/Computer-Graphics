@@ -1,12 +1,8 @@
 import java.awt.*;
-
+@SuppressWarnings("serial")
 public class SP500 extends BufferedApplet {
-	/**
-	 * 
-	 */
-	
 //	the height and width should be 622px
-	private static final long serialVersionUID = 1L;
+
 	int counter = 0;
 	double[] sp500 = { 58.03, 55.78, 55.02, 55.73, 55.22, 57.26, 55.84, 56.51,
 			54.81, 53.73, 55.47, 56.80, 59.72, 62.17, 64.12, 65.83, 66.50,
