@@ -1,11 +1,7 @@
 import java.awt.*;
 
+@SuppressWarnings("serial")
 public class TwistedCubes extends BufferedApplet {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 
 	double points[][][] = { { { -1, 1, 1 }, { 1, 1, 1 }, { 1, -1, 1 },
 			{ -1, -1, 1 }, { -1, 1, 1 }, { -1, 1, -1 }, { 1, 1, -1 },
@@ -14,22 +10,17 @@ public class TwistedCubes extends BufferedApplet {
 			{ -1, -1, 1 }, { -1, -1, -1 } } };
 
 	int width = 0, height = 0;
-	double a[] = { 0, 0, 0 }, b[] = { 0, 0, 0 };
-	int pa[] = { 0, 0 }, pb[] = { 0, 0 };
-
 	double startTime = System.currentTimeMillis() / 1000.0;
 	double t = 0, sint = 0;
-	Matrix m = new Matrix();
-
+	double a[] = { 0, 0, 0 }, b[] = { 0, 0, 0 };
+	int pa[] = { 0, 0 }, pb[] = { 0, 0 };
 	int grey = 0;
 	float color = 0;
+	Matrix m = new Matrix();
 
 	public void render(Graphics g) {
 		width = getWidth();
 		height = getHeight();
-
-		g.setColor(Color.red);
-		g.fillRect(0, 0, width, height);
 
 		// change color
 
