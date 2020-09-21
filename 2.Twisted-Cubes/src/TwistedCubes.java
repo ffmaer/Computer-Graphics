@@ -1,64 +1,65 @@
-import java.awt.*;
-
+import java.awt.Color;
+import java.awt.Graphics;
 @SuppressWarnings("serial")
 public class TwistedCubes extends BufferedApplet {
 
-	double points[][][] = { { { -1, 1, 1 }, { 1, 1, 1 }, { 1, -1, 1 },
+	double endPoints[][][] = { { { -1, 1, 1 }, { 1, 1, 1 }, { 1, -1, 1 },
 			{ -1, -1, 1 }, { -1, 1, 1 }, { -1, 1, -1 }, { 1, 1, -1 },
 			{ 1, -1, -1 }, { -1, -1, -1 }, { -1, 1, -1 }, { -1, 1, 1 },
 			{ 1, -1, -1 }, { 1, -1, 1 }, { 1, 1, 1 }, { 1, 1, -1 },
-			{ -1, -1, 1 }, { -1, -1, -1 } } };
+			{ -1, -1, 1 }, { -1, -1, -1 } } }; // 17 points specifying 16 edges of a cube
 
-	int width = 0, height = 0;
+	int canvasWidth, canvasHeight;
 	double startTime = System.currentTimeMillis() / 1000.0;
-	double t = 0, sint = 0;
-	double a[] = { 0, 0, 0 }, b[] = { 0, 0, 0 };
-	int pa[] = { 0, 0 }, pb[] = { 0, 0 };
+	double timePassed = 0, sineScale = 0;
+	int pointA[] = { 0, 0 }, pointB[] = { 0, 0 };
 	int grey = 0;
 	float color = 0;
+	int ovalSize = 5;
 	Matrix m = new Matrix();
 
 	public void render(Graphics g) {
-		width = getWidth();
-		height = getHeight();
+		canvasWidth = getWidth();
+		canvasHeight = getHeight();
 
+		//clean the canvas
+		g.setColor(Color.WHITE);
+		g.fillRect(0, 0, canvasWidth, canvasHeight);
+		
 		// change color
-
-		grey += 2;
-		grey = grey % 255;
-		color = (float) ((255 - grey) / 255.0);
-		g.setColor(new Color(color, color, color));
-
-		// control shapes
-
-		t = System.currentTimeMillis() / 1000.0 - startTime;
-		sint = Math.sin(t) / 5;
-
+		g.setColor(Color.BLACK);
+		
+		// rotate and scale
+		timePassed = System.currentTimeMillis() / 1000.0 - startTime;
+		sineScale = Math.sin(timePassed) / 5;
 		m.identity();
-		m.rotateX(t);
-		m.rotateY(t);
-		m.rotateZ(t);
-		m.scale(sint, sint, sint);
+		m.rotateX(timePassed);
+		m.rotateY(timePassed);
+		m.rotateZ(timePassed);
+		m.scale(sineScale, sineScale, sineScale);
+
 
 		// draw the shape
-
-		for (int i = 0; i < points.length; i++)
-			for (int j = 1; j < points[i].length; j++) {// LOOP THROUGH ALL THE
-														// LINES IN THE SHAPE
-				m.transform(points[i][j - 1], a); // TRANSFORM BOTH ENDPOINTS OF
-													// LINE
-				m.transform(points[i][j], b);
-				viewport(a, pa);
-				viewport(b, pb);
-				g.drawLine(pa[0], pa[1], pb[0], pb[1]); // DRAW ONE LINE ON THE
-														// SCREEN
-
+		for (int i = 0; i < endPoints.length; i++)
+			for (int j = 1; j < endPoints[i].length; j++) {// LOOP THROUGH ALL THE LINES IN THE SHAPE
+				// apply matrix transformation on both end points of a line
+				double transformedEndPointA[] = { 0, 0, 0 }, transfomredEndPointB[] = { 0, 0, 0 };
+				m.transform(endPoints[i][j - 1], transformedEndPointA);
+				m.transform(endPoints[i][j], transfomredEndPointB);
+				viewport(transformedEndPointA, pointA);
+				viewport(transfomredEndPointB, pointB);
+				g.drawOval(pointA[0], pointA[1], ovalSize, ovalSize);
+				g.drawOval(pointB[0], pointB[1], ovalSize, ovalSize);
+				g.drawLine(pointA[0], pointA[1], pointB[0], pointB[1]); // DRAW ONE LINE ON THE SCREEN
 			}
-
 	}
 
 	public void viewport(double src[], int dst[]) {
-		dst[0] = (int) (0.5 * width + src[0] * width);
-		dst[1] = (int) (0.5 * height - src[1] * width);
+		// src[0] contains numbers less than 1, need to scale it up
+		// move the graphics to the center of the canvas
+		dst[0] = (int) (0.5 * canvasWidth + src[0] * canvasWidth);
+		dst[1] = (int) (0.5 * canvasHeight + src[1] * canvasHeight);
 	}
 }
+
+//https://docs.oracle.com/javase/8/docs/api/java/awt/Graphics.html
