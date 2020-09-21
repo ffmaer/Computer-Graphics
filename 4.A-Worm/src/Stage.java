@@ -1,4 +1,5 @@
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.Random;
 @SuppressWarnings("serial")
 public class Stage extends BufferedApplet
@@ -7,13 +8,10 @@ public class Stage extends BufferedApplet
 	int width = 0, height = 0;
 	double x=0,y=0,z=0;
 	double startTime = System.currentTimeMillis() / 1000.0;
-	double t = 0, sint=0;
+	double timeStarted = 0, sint=0;
 	Matrix matrix = new Matrix();
 	Geometry shape;
 	Random rnd = new Random();
-
-
-
 
 	final static int MATRIX_STACK_SIZE = 100;
 	int matrixStackTop = 0;
@@ -22,7 +20,6 @@ public class Stage extends BufferedApplet
 		for (int n = 0 ; n < MATRIX_STACK_SIZE ; n++)
 			matrixStack[n] = new Matrix();
 	}
-
 
 	Geometry[] balls = new Geometry[20];
 	
@@ -91,8 +88,8 @@ public class Stage extends BufferedApplet
 		mclear();
 		mpush();
 		m().scale(0.04, 0.04, 0.04);
-		m().translate(-t, 0, 0);
-		m().rotateX(t);
+		m().translate(-timeStarted, 0, 0);
+		m().rotateX(timeStarted);
 		for(int i=0;i<balls.length;i++){
 			mpush();
 			m().rotateX(-Math.PI / balls.length);
@@ -116,7 +113,7 @@ public class Stage extends BufferedApplet
 
 
 	public void animate(){
-		t = System.currentTimeMillis() / 1000.0 - startTime;
+		timeStarted = System.currentTimeMillis() / 1000.0 - startTime;
 	}
 
 }
