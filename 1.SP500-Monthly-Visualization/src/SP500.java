@@ -1,9 +1,13 @@
 import java.awt.*;
+import java.util.Arrays;
 @SuppressWarnings("serial")
 public class SP500 extends BufferedApplet {
-//	the height and width should be 622px
-
+//	the height and width should be sp500.length pixels
 	int counter = 0;
+	int complete_count = 0;
+	int ovalSize;
+	int gap_height = 100;
+	
 	double[] sp500 = { 58.03, 55.78, 55.02, 55.73, 55.22, 57.26, 55.84, 56.51,
 			54.81, 53.73, 55.47, 56.80, 59.72, 62.17, 64.12, 65.83, 66.50,
 			65.62, 65.44, 67.80, 67.26, 68.00, 71.08, 71.71, 69.07, 70.22,
@@ -82,38 +86,40 @@ public class SP500 extends BufferedApplet {
 			1125.06, 1083.36, 1079.80, 1087.28, 1122.08, 1171.58, 1198.89,
 			1241.53, 1282.62, 1321.12, 1304.49, 1331.51, 1338.31, 1287.29,
 			1325.18, 1185.31, 1173.88, 1207.22, 1226.41 };
+	double max = Arrays.stream(sp500).max().getAsDouble(); 
 
 	public void render(Graphics g) {
-
 		int w = getWidth();
 		int h = getHeight();
-
-		if (counter % 622 == 0) {
-			counter = 0;
-			g.setColor(Color.black);
+		
+		if(counter == 0 && complete_count == 0) {
+			g.setColor(Color.black); // set the background to black
 			g.fillRect(0, 0, w, h);
 		}
 
-		if (counter == 0) {
-			g.setColor(Color.green);
-
-		} else {
-			if (sp500[counter] >= sp500[counter - 1]) {
-				g.setColor(Color.green);
-
-			}
-
-			else {
-				g.setColor(Color.red);
-
-			}
-
-			g.drawLine(counter - 1, 622 - (int) (sp500[counter - 1] / 2.5),
-					counter, 622 - (int) (sp500[counter] / 2.5));
-
+		if (counter % sp500.length == 0) { // start again, but at a higher position
+			counter = 0;
+			complete_count++;
+			ovalSize = 30 * (complete_count+1);
 		}
 
-		g.drawOval(counter, 622 - (int) (sp500[counter] / 2.5), 5, 5);
+		if (counter >0 ) {
+
+			int x1 = (int) (((double)counter - 1)/(double)sp500.length*w);
+			int y1 = (int) (h-sp500[counter - 1]/max*h)-complete_count*gap_height;
+			int x2 = (int) ((double)counter/(double)sp500.length*w);
+			int y2 = (int) (h-sp500[counter]/max*h)-complete_count*gap_height;
+
+			if (sp500[counter] >= sp500[counter - 1]) { // set color to green or red
+				g.setColor(Color.green);
+			}else {
+				g.setColor(Color.red);
+			}
+
+			g.drawLine(x1, y1, x2, y2);
+			g.fillOval(x2, y2, ovalSize, ovalSize);
+
+		}
 
 		counter++;
 

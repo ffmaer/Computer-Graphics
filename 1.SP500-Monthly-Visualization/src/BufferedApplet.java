@@ -13,6 +13,8 @@ public abstract class BufferedApplet extends java.applet.Applet implements
 	// A BACKGROUND THREAD CALLS REPAINT EVERY 30 MILLISECONDS,
 
 	public void start() {
+		this.setSize(600, 600);
+
 		if (t == null)
 			(t = new Thread(this)).start();
 	}
@@ -21,7 +23,7 @@ public abstract class BufferedApplet extends java.applet.Applet implements
 		try {
 			while (true) {
 				repaint();
-				Thread.sleep(30);
+				Thread.sleep(1000/60); //60 fps
 			}
 		} catch (Exception e) {
 		}
