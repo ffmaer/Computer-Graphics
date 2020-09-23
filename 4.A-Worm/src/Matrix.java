@@ -46,6 +46,7 @@ public class Matrix{
 		destination[2][1] =  Math.sin(theta);
 		destination[2][2] =  Math.cos(theta);
 	}
+	
 	private void createYRotationData(double theta, double destination[][]) {
 
 		createIdentityData(destination);
@@ -54,6 +55,7 @@ public class Matrix{
 		destination[0][2] =  Math.sin(theta);
 		destination[2][2] =  Math.cos(theta);
 	}
+	
 	private void createZRotationData(double theta, double destination[][]) {
 		createIdentityData(destination);
 		destination[0][0] =  Math.cos(theta);
@@ -61,6 +63,7 @@ public class Matrix{
 		destination[1][0] =  Math.sin(theta);
 		destination[1][1] =  Math.cos(theta);
 	}
+	
 	private void createScaleData(double x, double y, double z, double destination[][]) {
 		createIdentityData(destination);
 		destination[0][0] = x;
@@ -87,11 +90,13 @@ public class Matrix{
 	public void identity() {
 		createIdentityData(data);
 	}
+	
 	public void translate(double a, double b, double c) {
 		double temp_data[][] = new double[4][4];
 		createTranslationData(a, b, c, temp_data);
 		multiply(temp_data);
 	}
+	
 	public void rotateX(double theta) {
 		double temp_data[][] = new double[4][4];
 		createXRotationData(theta, temp_data);
@@ -112,16 +117,12 @@ public class Matrix{
 	}
 	
 
-
-
 	public void scale(double a, double b, double c) {
 		double temp_data[][] = new double[4][4];
 		createScaleData(a, b, c, temp_data);
 		multiply(temp_data);
 	}
 	
-
-
 	public void transform(double src[], double destination[]) {
 		for (int row = 0; row < destination.length; row++) {
 			destination[row] = 0;

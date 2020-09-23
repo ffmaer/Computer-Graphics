@@ -17,11 +17,9 @@ public class Geometry
 	int shape;
 
 	public Geometry(){
-
+		
 	}
 	
-
-
 	public void generate_faces(){
 		faces = new int[m*n][4];
 
@@ -37,16 +35,15 @@ public class Geometry
 				int[] face = {p1,p2,p3,p4};
 				faces[counter] = face;
 				counter++;
-
 			}
 		}
-
 	}
 
-	public void global(){
+	public void gen_and_draw(){
 		generate_faces();
 		draw();
 	}
+	
 	public void sphere(){
 		vertices = new double[(m+1)*(n+1)][4];
 
@@ -64,7 +61,7 @@ public class Geometry
 				vertices[index] = xyz;
 			}
 		}
-		global();
+		gen_and_draw();
 	}
 
 	public void cylinder_top(){
@@ -78,19 +75,16 @@ public class Geometry
 
 				int index = i+(m+1)*j;
 
-
 				double x = Math.cos(theta1) * r;
 				double y = Math.sin(theta1) * r;
 				double[] xyz = {x,y,1,1};
 
 				vertices[index] = xyz;
 
-
 			}
 		}
-		global();
+		gen_and_draw();
 	}
-	
 	
 	public void cylinder_bottom(){
 
@@ -103,17 +97,15 @@ public class Geometry
 
 				int index = i+(m+1)*j;
 
-
 				double x = Math.cos(theta1) * r;
 				double y = Math.sin(theta1) * r;
 				double[] xyz = {x,y,-1,1};
 
 				vertices[index] = xyz;
 
-
 			}
 		}
-		global();
+		gen_and_draw();
 	}
 
 	public void cylinder_center(){
@@ -133,7 +125,7 @@ public class Geometry
 				vertices[index] = xyz;
 			}
 		}
-		global();
+		gen_and_draw();
 
 	}
 
@@ -153,6 +145,7 @@ public class Geometry
 		this.n = n;
 		this.shape = 1;
 	}
+	
 	public void cylinder(int m){
 		this.m = m;
 		this.n = 1;
@@ -161,9 +154,9 @@ public class Geometry
 
 	public void draw(){
 		
-		for( int j = 0; j < faces.length; j++ ){// LOOP THROUGH ALL THE LINES IN THE SHAPE
+		for( int j = 0; j < faces.length; j++ ){ // LOOP THROUGH ALL THE LINES IN THE SHAPE
 			for(int i = 0;i<faces[j].length;i++){
-				matrix.transform(vertices[faces[j][i]], a);				 // TRANSFORM BOTH ENDPOINTS OF LINE
+				matrix.transform(vertices[faces[j][i]], a);	// TRANSFORM BOTH ENDPOINTS OF LINE
 				matrix.transform(vertices[faces[j][(i+1) % faces[j].length]], b);
 				viewport(a, pa);
 				viewport(b, pb);
@@ -176,7 +169,6 @@ public class Geometry
 
 		dst[0] = (int) ( ( 0.5 * width  + f*src[0] / (f-src[2]) * width ));
 		dst[1] = (int) ( ( 0.5 * height - f*src[1] / (f-src[2]) * width ));
-		
 		
 	}
 

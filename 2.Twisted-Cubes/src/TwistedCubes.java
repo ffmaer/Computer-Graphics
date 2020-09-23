@@ -58,7 +58,7 @@ public class TwistedCubes extends BufferedApplet {
 		// src[0] contains numbers less than 1, need to scale it up
 		// move the graphics to the center of the canvas
 		dst[0] = (int) (0.5 * canvasWidth + src[0] * canvasWidth);
-		dst[1] = (int) (0.5 * canvasHeight + src[1] * canvasHeight);
+		dst[1] = (int) (0.5 * canvasHeight + src[1] * canvasWidth);
 	}
 }
 
