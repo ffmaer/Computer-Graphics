@@ -1,23 +1,26 @@
 import java.awt.*;
 import java.util.Random;
 
+// It's a person jumping around.
+// It's about hierarchy among components.
+
 @SuppressWarnings("serial")
 public class Stage extends BufferedApplet
 {
 
-	int width, height;
+	int width, height; // canvas width and height
 
 	double startTime = System.currentTimeMillis() / 1000.0;
-
-	double t = 0, sint=0;
+	double timePassed = 0, sint=0;
+	int timePassedMiliseconds = 0;
 	Matrix m = new Matrix();
 	Random rnd = new Random();
-
-
 
 	Geometry world,neck,person,l_shoulder,r_shoulder,l_joint,r_joint,mover;
 	Geometry body,head,l_leg,r_leg,l_arm,r_arm;
 
+
+	
 	public void init(){
 
 
@@ -133,25 +136,23 @@ public class Stage extends BufferedApplet
 
 
 
-	double p1,p4,r1,r4;
+	double p1,p4,r1,r4; // for spline()
 	double time;
 	double slope_at_timek,slope_at_timek1;
 
 	double wave = 1.5;
 
-	int counter = 0;
-	int direction = 1;
+	int counter = -1;
+	int direction = 1; // 1 or -1, move left or move right
 	public void render(Graphics g) {
-
-
-
 		
-
-
 		Geometry.g = g;
-		g.setColor(Color.black);
-		g.fillRect(0, 0, width, height);		
-		g.setColor(Color.white);
+		if(counter == 0) {
+			g.setColor(Color.BLACK);
+			g.fillRect(0, 0, width, height);	
+		}
+	
+		g.setColor(Color.GREEN);
 		
 		double x = spline(pair_x);
 		
@@ -192,26 +193,18 @@ public class Stage extends BufferedApplet
 		world.root_matrix.identity();
 		world.traverse();
 
-
-
-
-
-
-
-
-
 	}
 	public double spline(double pair[][]){
 		
 		double value = 0;
 		int n = pair.length-1;
 		
-		int k = (int)t;
+		int k = (int)timePassed;
 
 
 
 		if(k<n){
-			double tt = t-k;
+			double tt = timePassed-k;
 
 			if(k==0){
 				slope_at_timek = 2 * (pair[1][1] - pair[0][1])/(pair[1][0]-pair[0][0]);
@@ -253,7 +246,7 @@ public class Stage extends BufferedApplet
 	}
 
 	public void animate(){
-		t = System.currentTimeMillis() / 1000.0 - startTime;
+		timePassed = System.currentTimeMillis() / 1000.0 - startTime;
 	}
 
 }

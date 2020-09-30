@@ -33,7 +33,7 @@ public class Geometry
 	} 
 	
 	public void remove(Geometry child) {
-		children.remove(children);
+		children.remove(child);
 	}
 	
 	public int getNumChildren() {
