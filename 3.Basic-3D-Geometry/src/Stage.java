@@ -23,7 +23,7 @@ public class Stage extends BufferedApplet
 		width = getWidth();
 		height = getHeight();
 
-		g.setColor(Color.white);
+		g.setColor(Color.black);
 		g.fillRect(0, 0, width, height);		
 
 
@@ -82,7 +82,7 @@ public class Stage extends BufferedApplet
 		matrix.rotateZ(t);
 	    matrix.translate(0, 0, 0);
 		matrix.scale(.05, .05, 1);
-		g.setColor(Color.red);
+		g.setColor(Color.green);
 		shape = new Geometry( matrix,  g,  height,  width, 20, 1);
 		shape.cylinder();
 
@@ -92,7 +92,7 @@ public class Stage extends BufferedApplet
 		matrix.rotateY(t);
 		matrix.rotateZ(t);
 		matrix.scale(.2, .2, .2);
-		g.setColor(Color.blue);
+		g.setColor(Color.green);
 		shape = new Geometry( matrix,  g,  height,  width, 50, 25);
 		shape.sphere();
 
