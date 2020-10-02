@@ -158,8 +158,6 @@ public class Stage extends BufferedApplet
 		
 		animate();
 
-
-
 		m = mover.matrix;
 		m.identity();
 		m.translate(x,0,0);
