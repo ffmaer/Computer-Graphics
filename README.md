@@ -12,3 +12,5 @@ Algorithms that generate 3D parametric shapes (cylinder, cube, sphere), ray-trac
 ![](https://github.com/ffmaer/Computer-Graphics/blob/2020/gifs/gibbon.gif?raw=true)
 
 ![](https://github.com/ffmaer/Computer-Graphics/blob/2020/gifs/ray-tracing.gif?raw=true)
+
+![](https://github.com/ffmaer/Computer-Graphics/blob/2020/gifs/rotate.gif?raw=true)
