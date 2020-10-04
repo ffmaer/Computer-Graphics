@@ -1,7 +1,24 @@
+
+/* Ken Perlin:
+ * 
+ * Homework 7, due before class, on Thursday April 12:
+ * 
+ * Your homework this week is to make a cool animated ray traced scene that contains more interesting shapes than just spheres.
+ * 
+ * You will need to implement ray tracing to transformed first order surfaces and to transformed second order surfaces. That means applying the same matrices you have been using all semester to the transform math I've described in the last section of these notes.
+ * 
+ * At the very least, create shapes that are the result of convex intersections, such as cylinders and cubes. This will allow you to use the simple intersection trick we discussed in class: taking the maximum of all "in" hits, and the minimum of all "out" hits.
+ * 
+ * For extra credit, implement the more general intersection algorithm that handles non-convex shapes. This will allow you to create far more interesting things.
+ * 
+ * For extra credit, implement refraction, atmospheric effects, sub-sampling for speed, and super-sampling for anti-aliasing.
+ * 
+ * https://web.archive.org/web/20150918171426/http://mrl.nyu.edu/~perlin/courses/spring2012/0405.html */
+
 import java.util.ArrayList;
 
-public class Ray extends MISApplet {
-	private static final long serialVersionUID = 1L;
+@SuppressWarnings("serial")
+public class Main extends MISApplet {
 
 	int nCols;
 	int nRows;
@@ -48,24 +65,17 @@ public class Ray extends MISApplet {
 				surface_p[i] = w[i] * inter.min_t + v[i];
 			}
 
-			surface_n[0] = 2 * inter.front_sphere.p_a * surface_p[0]
-					+ inter.front_sphere.p_e * surface_p[2]
-					+ inter.front_sphere.p_f * surface_p[1]
-					+ inter.front_sphere.p_g;
-			surface_n[1] = 2 * inter.front_sphere.p_b * surface_p[1]
-					+ inter.front_sphere.p_d * surface_p[2]
-					+ inter.front_sphere.p_f * surface_p[0]
-					+ inter.front_sphere.p_h;
-			surface_n[2] = 2 * inter.front_sphere.p_c * surface_p[2]
-					+ inter.front_sphere.p_d * surface_p[1]
-					+ inter.front_sphere.p_e * surface_p[0]
-					+ inter.front_sphere.p_i;
+			surface_n[0] = 2 * inter.front_sphere.p_a * surface_p[0] + inter.front_sphere.p_e * surface_p[2]
+					+ inter.front_sphere.p_f * surface_p[1] + inter.front_sphere.p_g;
+			surface_n[1] = 2 * inter.front_sphere.p_b * surface_p[1] + inter.front_sphere.p_d * surface_p[2]
+					+ inter.front_sphere.p_f * surface_p[0] + inter.front_sphere.p_h;
+			surface_n[2] = 2 * inter.front_sphere.p_c * surface_p[2] + inter.front_sphere.p_d * surface_p[1]
+					+ inter.front_sphere.p_e * surface_p[0] + inter.front_sphere.p_i;
 
 			Vector.normalize(surface_n);
 
 			for (int i = 0; i < 3; i++) {
-				reflection_v[i] = w[i] - 2 * Vector.dot(surface_n, w)
-						* surface_n[i];
+				reflection_v[i] = w[i] - 2 * Vector.dot(surface_n, w) * surface_n[i];
 				phong[i] = m.a_rgb[i];
 			}
 
@@ -73,12 +83,8 @@ public class Ray extends MISApplet {
 
 				for (int i = 0; i < 3; i++) {
 
-					phong[i] += l.rgb[i]
-							* (m.d_rgb[i]
-									* Math.max(Vector.dot(l.xyz, surface_n), 0) + m.s_rgb[i]
-									* Math.max(Math.pow(
-											Vector.dot(l.xyz, reflection_v),
-											m.p), 0));
+					phong[i] += l.rgb[i] * (m.d_rgb[i] * Math.max(Vector.dot(l.xyz, surface_n), 0)
+							+ m.s_rgb[i] * Math.max(Math.pow(Vector.dot(l.xyz, reflection_v), m.p), 0));
 				}
 
 			}
@@ -104,8 +110,9 @@ public class Ray extends MISApplet {
 
 				mat1.identity();
 				mat1.translate(s.c[0], s.c[1], s.c[2]);
-				mat1.rotateY(time / 10.0);
-				mat1.rotateX(time / 10.0);
+//				mat1.rotateX(time);
+				mat1.rotateY(time);
+//				mat1.rotateZ(time);
 
 				mat1.inverse();
 				mat2.copy(mat1);
@@ -156,16 +163,19 @@ public class Ray extends MISApplet {
 
 	public void initialize() {
 
-		double[][][] rgbs = {
-				{ { 228.0 / 255.0, 28.0 / 255.0, 28.0 / 255.0 },
-						{ 197.0 / 255.0, 198.0 / 255.0, 200.0 / 255.0 },
-						{ 255.0 / 255.0, 255.0 / 255.0, 255.0 / 255.0 } },
-				{ { 10.0 / 255.0, 200.0 / 255.0, 10.0 / 255.0 },
-						{ 70.0 / 255.0, 40.0 / 255.0, 255.0 / 255.0 },
-						{ 255.0 / 255.0, 240.0 / 255.0, 215.0 / 255.0 } },
-				{ { 26.0 / 255.0, 26.0 / 255.0, 196.0 / 255.0 },
-						{ 51.0 / 255.0, 87.0 / 255.0, 255.0 / 255.0 },
-						{ 255.0 / 255.0, 214.0 / 255.0, 196.0 / 255.0 } } };
+		// Argb (ambient color, with 3 values)
+		// Drgb (diffuse color, with 3 values)
+		// Srgb (specular color, with 3 values)
+		double[][][] rgbs = { { { 66, 66, 66 }, { 66, 66, 66 }, { 255, 255, 255 } },
+				{ { 0, 255, 0 }, { 0, 255, 0 }, { 255, 255, 255 } },
+				{ { 33, 33, 33 }, { 33, 33, 33 }, { 255, 255, 255 } } };
+		for (double[][] group : rgbs) {
+			for (double[] color : group) {
+				for (int i = 0; i < 3; i++) {
+					color[i] /= 255.0;
+				}
+			}
+		}
 
 		Material red = new Material(rgbs[0], 100, 0.2);
 		Material green = new Material(rgbs[1], 100, 0.01);
@@ -181,27 +191,18 @@ public class Ray extends MISApplet {
 		nRows = getHeight();
 
 		shapes.add(new Shape());
-		shapes.get(shapes.size() - 1).spheres.add(new Sphere(0, 0, 0, 0, 0, 0,
-				0, 0, 0, 0, 0, 1, -0.5, green, 0));
-		shapes.get(shapes.size() - 1).spheres.add(new Sphere(0, 0, 0, 0, 0, 0,
-				0, 0, 0, 0, 0, -1, -2, green, 0));
-		shapes.get(shapes.size() - 1).spheres.add(new Sphere(0, 0, 0, 0, 0, 0,
-				0, 0, 0, 0, 1, 0, -2, green, 0));
-		shapes.get(shapes.size() - 1).spheres.add(new Sphere(0, 0, 0, 0, 0, 0,
-				0, 0, 0, 0, -1, 0, -2, green, 0));
-		shapes.get(shapes.size() - 1).spheres.add(new Sphere(0, 0, 0, 0, 0, 0,
-				0, 0, 0, 1, 0, 0, -2, green, 0));
-		shapes.get(shapes.size() - 1).spheres.add(new Sphere(0, 0, 0, 0, 0, 0,
-				0, 0, 0, -1, 0, 0, -2, green, 0));
-		shapes.get(shapes.size() - 1).spheres.add(new Sphere(0, -1, 0, 1, 1, 0,
-				0, 0, 0, 0, 0, 0, -0.1, blue, 3));
-		shapes.get(0).spheres.add(new Sphere(0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0,
-				0, -0.2, red, 3));
+		shapes.get(shapes.size() - 1).spheres.add(new Sphere(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, -0.5, green, 0));
+		shapes.get(shapes.size() - 1).spheres.add(new Sphere(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -2, green, 0));
+		shapes.get(shapes.size() - 1).spheres.add(new Sphere(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, -2, green, 0));
+		shapes.get(shapes.size() - 1).spheres.add(new Sphere(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, -2, green, 0));
+		shapes.get(shapes.size() - 1).spheres.add(new Sphere(0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, -2, green, 0));
+		shapes.get(shapes.size() - 1).spheres.add(new Sphere(0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, -2, green, 0));
+		shapes.get(shapes.size() - 1).spheres.add(new Sphere(0, -1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, -0.1, blue, 3));
+		shapes.get(0).spheres.add(new Sphere(0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, -0.2, red, 3));
 
 	}
 
-	public void setPixel(int x, int y, int rgb[], int host[],
-			boolean super_sampling) { // SET ONE PIXEL'S COLOR
+	public void setPixel(int x, int y, int rgb[], int host[], boolean super_sampling) { // SET ONE PIXEL'S COLOR
 
 		if (x == 255 && y == 255) {
 

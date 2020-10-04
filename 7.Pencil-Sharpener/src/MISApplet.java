@@ -1,12 +1,14 @@
+/* Ken Perlin
+ * Better substrateAs we discussed in class, instead of using BufferedApplet, it is more efficient to write directly to the color framebuffer as an array. The Java library provides a way to do this through its Memory Image Source facility. To get started with this better way of doing things, download the source from the example I showed in class: http://mrl.nyu.edu/~perlin/MIS
+ * https://web.archive.org/web/20150918171426/http://mrl.nyu.edu/~perlin/courses/spring2012/0405.html
+ */
+
 import java.applet.*;
 import java.awt.*;
 import java.awt.image.*;
 
+@SuppressWarnings("serial")
 public class MISApplet extends Applet implements Runnable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	public int W, H;
 
 	// YOUR APPLET CAN OVERRIDE THE FOLLOWING TWO METHODS:
@@ -58,7 +60,6 @@ public class MISApplet extends Applet implements Runnable {
 	public void init() {
 
 		setLayout(new BorderLayout());
-
 		W = getBounds().width; // FIND THE RESOLUTION OF THE JAVA APPLET
 		H = getBounds().height;
 		pix = new int[W * H]; // ALLOCATE A FRAME BUFFER IMAGE
