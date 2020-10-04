@@ -44,7 +44,7 @@ public abstract class BufferedApplet extends java.applet.Applet implements Runna
 		public void keyTyped( KeyEvent e ) {
 	      char c = e.getKeyChar();
 	      if ( c == 's' ) {
-			Ray.shadow_on *= (-1);
+			Main.shadow_on *= (-1);
 	      }
 	   }
 

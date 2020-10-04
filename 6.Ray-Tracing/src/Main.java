@@ -1,9 +1,17 @@
+
+/* Ken Perlin:
+ * Homework 6, due Thursday April 5, before class starts:
+ * Implement a simple ray tracer, as per the above notes. 
+ * You should create an original scene consisting of spheres.
+ * Your scene should demonstrate both Phong shading and mirror reflection.
+ * https://web.archive.org/web/20150915113252/http://mrl.nyu.edu/~perlin/courses/spring2012/0329.html */
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Random;
 
 @SuppressWarnings("serial")
-public class Ray extends BufferedApplet {
+public class Main extends BufferedApplet {
 
 	Random rnd = new Random();
 
