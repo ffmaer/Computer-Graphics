@@ -1,16 +1,12 @@
 import java.awt.*;
-import java.util.Random;
 
-public class Stage extends BufferedApplet {
-	private static final long serialVersionUID = 1L;
-
+public class Main extends BufferedApplet {
 	int width, height;
 
 	double startTime = System.currentTimeMillis() / 1000.0;
 
-	double t = 0, sint = 0;
+	double t = 0;
 	Matrix m = new Matrix();
-	Random rnd = new Random();
 
 	Geometry world, neck, person, mover;
 	Geometry head;
@@ -44,11 +40,10 @@ public class Stage extends BufferedApplet {
 	}
 
 	public Geometry shape(int m, int n) {
-		Geometry geo = new Geometry(m, n);
-		return geo;
+		return new Geometry(m, n);
 	}
 
-	// zbuffer
+	// z-buffer
 
 	// frame buffer
 
