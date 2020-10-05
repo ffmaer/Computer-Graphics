@@ -1,8 +1,19 @@
 // Linear interpolation
 
-public class Scan extends MISApplet {
+/*
+Ken Perlin:
 
-	private static final long serialVersionUID = 1L;
+Homework 8 due Thursday April 26
+
+For your homework, which is due next Thursday, you should at least demonstrate that you can split a triangle into two trapezoids, and then apply the above math to interpolate [r,g,b,pz] values down to the pixel level. To do this, I suggest you write a Java applet that extends MISApplet (which is what you did for ray tracing), and show that your applet correctly interpolates given any choices of locations [x,y] and colors [r,g,b] at each of the three triangle vertices.
+
+https://web.archive.org/web/20201005105230/https://mrl.nyu.edu/~perlin/courses/spring2012/scan-conversion.html
+
+*/
+
+
+@SuppressWarnings("serial")
+public class ScanLine extends MISApplet {
 
 	// three corners of a triangle
 	double[] a = new double[6];

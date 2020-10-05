@@ -1,7 +1,26 @@
 // Iterative methods and integer arithmetic
-public class Scan2 extends MISApplet {
 
-	private static final long serialVersionUID = 1L;
+/*
+Ken Perlin:
+
+Homework 8 due Thursday April 26
+
+For your homework, which is due next Thursday, you should at least demonstrate that you can split a triangle into two trapezoids, and then apply the above math to interpolate [r,g,b,pz] values down to the pixel level. To do this, I suggest you write a Java applet that extends MISApplet (which is what you did for ray tracing), and show that your applet correctly interpolates given any choices of locations [x,y] and colors [r,g,b] at each of the three triangle vertices.
+
+Once you get that much working, try implementing the two kinds of speed-ups, iterative methods and integer arithmetic.
+
+In more detail, here's how you can implement those speed-ups:
+
+Iterative methods. To do this, you first compute an amount to increment per scan line when marching down the left edge and the right edge, respectively:
+ 
+Integer arithmetic: To do this, you can scale all your values up by some power of two, say 212 = 4096, and do all operations using integers. Then scale everything back down again when you've finally interpolated down to the pixel level.
+If you implement both of the above speed-ups, you'll see a very dramatic improvement in running time.
+
+https://web.archive.org/web/20201005105230/https://mrl.nyu.edu/~perlin/courses/spring2012/scan-conversion.html
+
+*/
+@SuppressWarnings("serial")
+public class ScanLineSpedUp extends MISApplet {
 
 	// three corners of a triangle
 	int[] a = new int[6];

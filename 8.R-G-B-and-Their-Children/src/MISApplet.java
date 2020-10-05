@@ -10,11 +10,8 @@ import java.applet.*;
 import java.awt.*;
 import java.awt.image.*;
 
+@SuppressWarnings("serial")
 public class MISApplet extends Applet implements Runnable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 
 	public int W, H;
 
