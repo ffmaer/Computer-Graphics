@@ -1,8 +1,22 @@
 import java.awt.Color;
 import java.awt.Graphics;
 
+/*
+Ken Perlin:
+
+Transformation Hierarchy:
+
+YOUR HOMEWORK, DUE BEFORE CLASS STARTS ON THURSDAY MARCH 1:
+
+Create your own animated hierarchical model. It can be anything that's fun and interesting, and that can be built from the shape primitives that you have implemented. Possibilities include a person running, two people dancing. a cat walking, a spider walking, a butterfly in flight, a twisting worm, a pool table with pool balls, an automobile with rolling wheels and a steering wheel, an electric motor, the solar system As you can see, the possibilities are endless.
+
+For this assignment, please incorporate perspective, as described in class and in the on-line notes.
+
+https://web.archive.org/web/20150915113310/http://mrl.nyu.edu/~perlin/courses/spring2012/hierarchy.html
+
+*/
 @SuppressWarnings("serial")
-public class Stage extends BufferedApplet
+public class Main extends BufferedApplet
 {
 
 	int width = 0, height = 0;
