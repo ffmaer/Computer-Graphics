@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c28fb7ac-6ac9-4138-b5ee-585146fc5955" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1iSNkNE5nGzZqjnTpVTWOSzJkGc" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/8.R-G-B-and-Their-Children" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c28fb7ac-6ac9-4138-b5ee-585146fc5955" name="Default Changelist" comment="" />
+      <created>1601897174899</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1601897174899</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="1132" y="1219" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1601897304691">
+      <screen x="0" y="0" width="3840" height="2120" />
+    </state>
+    <state x="1132" y="1219" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.3840.2120@0.0.3840.2120" timestamp="1601897304691" />
+    <state x="1407" y="1354" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1601897299892">
+      <screen x="0" y="0" width="3840" height="2120" />
+    </state>
+    <state x="1407" y="1354" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.3840.2120@0.0.3840.2120" timestamp="1601897299892" />
+    <state x="1458" y="1319" key="FileChooserDialogImpl" timestamp="1601897319145">
+      <screen x="0" y="0" width="3840" height="2120" />
+    </state>
+    <state x="1458" y="1319" key="FileChooserDialogImpl/0.0.3840.2120@0.0.3840.2120" timestamp="1601897319145" />
+  </component>
+</project>
