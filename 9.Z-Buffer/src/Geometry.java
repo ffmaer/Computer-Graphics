@@ -3,15 +3,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Geometry {
-
+	static Graphics g;
+	static int height;
+	static int width;
+	
 	Matrix matrix;
 	Matrix root_matrix;
 	Matrix root_matrix_2;
 
-	static Graphics g;
-
-	static int height;
-	static int width;
 	int m, n;
 	double f = 1;
 
@@ -30,26 +29,35 @@ public class Geometry {
 
 	ArrayList<Geometry> children = new ArrayList<Geometry>();
 
-	public void add(Geometry child) {
-		children.add(child);
-	}
+	double[][][] rgbs = { { { 228 , 28 , 28  },{ 197 , 198 , 200  },{ 255 , 255 , 255  } },
+			{ { 10 , 200 , 10  },{ 70 , 40 , 255  },{ 255 , 240 , 215  } },
+			{ { 26 , 26 , 196  },{ 51 , 87 , 255  },{ 255 , 214 , 196  } } };
 
-	public void remove(Geometry child) {
-		children.remove(children);
-	}
+	Material red,green,blue;
 
-	public int getNumChildren() {
-		return children.size();
-	}
+	Material selected_material;
 
-	public Geometry getChild(int index) {
-		return children.get(index);
-	}
+	double[] surface_n = new double[3];
+	double[] phong = new double[3];
 
 	Light[] ls;
 	float zbuffer[][][];
-
+	
 	public Geometry(int m, int n) {
+		
+		for (double[][] group : rgbs) {
+			for (double[] color : group) {
+				for (int i = 0; i < 3; i++) {
+					color[i] /= 255.0;
+				}
+			}
+		};
+		
+		red = new Material(rgbs[0], 100, 0.2);
+		green = new Material(rgbs[1], 100, 0.01);
+		blue = new Material(rgbs[2], 6, 0.15);
+		selected_material = blue; // you can change the color to red/gree/blue
+		
 		ls = new Light[1];
 		matrix = new Matrix();
 		matrix.identity();
@@ -57,8 +65,7 @@ public class Geometry {
 		root_matrix_2 = new Matrix();
 		root_matrix.identity();
 
-		ls[0] = new Light(2, 2, 6, 0.7, 0.7, 0.7);
-
+		ls[0] = new Light(2, 2, 6, 0.7, 0.7, 0.7); // x y z r g b
 
 		zbuffer = new float[height][width][4];
 
@@ -72,6 +79,23 @@ public class Geometry {
 		this.m = m;
 		this.n = n;
 	}
+	public void add(Geometry child) {
+		children.add(child);
+	}
+
+	public void remove(Geometry child) {
+		children.remove(child);
+	}
+
+	public int getNumChildren() {
+		return children.size();
+	}
+
+	public Geometry getChild(int index) {
+		return children.get(index);
+	}
+
+	
 
 	public void traverse() {
 		this.root_matrix.multiply(this.matrix);
@@ -243,25 +267,6 @@ public class Geometry {
 		this.shape = 0;
 	}
 
-	double[][][] rgbs = {
-			{ { 228.0 / 255.0, 28.0 / 255.0, 28.0 / 255.0 },
-					{ 197.0 / 255.0, 198.0 / 255.0, 200.0 / 255.0 },
-					{ 255.0 / 255.0, 255.0 / 255.0, 255.0 / 255.0 } },
-			{ { 10.0 / 255.0, 200.0 / 255.0, 10.0 / 255.0 },
-					{ 70.0 / 255.0, 40.0 / 255.0, 255.0 / 255.0 },
-					{ 255.0 / 255.0, 240.0 / 255.0, 215.0 / 255.0 } },
-			{ { 26.0 / 255.0, 26.0 / 255.0, 196.0 / 255.0 },
-					{ 51.0 / 255.0, 87.0 / 255.0, 255.0 / 255.0 },
-					{ 255.0 / 255.0, 214.0 / 255.0, 196.0 / 255.0 } } };
-
-	Material red = new Material(rgbs[0], 100, 0.2);
-	Material green = new Material(rgbs[1], 100, 0.01);
-	Material blue = new Material(rgbs[2], 6, 0.15);
-
-	Material ma = red;
-
-	double[] surface_n = new double[3];
-	double[] phong = new double[3];
 
 	public void draw() {
 
@@ -289,7 +294,7 @@ public class Geometry {
 				Vector.normalize(surface_n);
 
 				for (int k = 0; k < 3; k++) {
-					phong[k] = ma.a_rgb[k];
+					phong[k] = selected_material.a_rgb[k];
 				}
 
 				for (Light l : ls) {
@@ -297,18 +302,18 @@ public class Geometry {
 					for (int k = 0; k < 3; k++) {
 
 						phong[k] += l.rgb[k]
-								* (ma.d_rgb[k] * Math.max(
+								* (selected_material.d_rgb[k] * Math.max(
 										Vector.dot(l.xyz, surface_n), 0));
 					}
 
 				}
 
 				transformed_vertices[faces[j][i]][3] = phong[0]
-						* (1.0 - ma.mc_rgb[0]);
+						* (1.0 - selected_material.mc_rgb[0]);
 				transformed_vertices[faces[j][i]][4] = phong[1]
-						* (1.0 - ma.mc_rgb[1]);
+						* (1.0 - selected_material.mc_rgb[1]);
 				transformed_vertices[faces[j][i]][5] = phong[2]
-						* (1.0 - ma.mc_rgb[2]);
+						* (1.0 - selected_material.mc_rgb[2]);
 
 				viewport(a, pa);
 				viewport(b, pb);

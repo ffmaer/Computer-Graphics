@@ -1,5 +1,20 @@
 import java.awt.*;
+/*
+Ken Perlin:
 
+Your homework 9 for Thursday May 3 is to finish the z-buffer assignment.
+
+If you have already gotten to the point where you can scan convert a triangle by interpreting its red,green,blue vertices down to the pixel level (the assignment that was due this week), then you are more than half way there. In these notes, I'm going to assume that you have completed that part of the algorithm.
+
+I am also going to assume that you have added a surface normal vector to each vertex of your primitive untransformed shapes.
+
+The complete steps of the zbuffer algorithm in a frame of animation are as follows:
+
+https://web.archive.org/web/20201005120313/https://mrl.nyu.edu/~perlin/courses/spring2012/zbuffer2.html
+
+*/
+
+@SuppressWarnings("serial")
 public class Main extends BufferedApplet {
 	int width, height;
 
